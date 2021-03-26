@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"rootDir": ".",
+		"strict": true,
+		"target": "ES2020",
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"declaration": true,
+		"sourceMap": true
+	},
+	"include": [
+		"src",
+		"test"
+	]
+}

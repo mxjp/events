@@ -1,0 +1,5 @@
+/test*
+/.nyc*
+/.editorconfig
+/ava*
+/tsconfig*
