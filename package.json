@@ -1,12 +1,12 @@
 {
 	"name": "@mpt/events",
 	"description": "Event emitter library inspired by the event api used in vscode extensions",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"author": "Max J. Polster",
-	"main": "./dist/cjs/index.js",
-	"module": "./dist/es/index.js",
+	"main": "./dist/es/index.js",
 	"exports": {
 		".": {
+			"node": "./dist/cjs/index.js",
 			"require": "./dist/cjs/index.js",
 			"default": "./dist/es/index.js"
 		}
