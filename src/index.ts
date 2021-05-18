@@ -52,7 +52,7 @@ export class Emitter<T extends any[]> {
 	public emit(...args: T): boolean;
 	public emit() {
 		if (this.listeners.size > 0) {
-			this.listeners.forEach(listener => listener.apply(null, arguments as any));
+			this.listeners.forEach(listener => listener.apply(null, arguments as unknown as T));
 			return true;
 		}
 		return false;

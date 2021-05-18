@@ -1,5 +1,5 @@
 import test from "ava";
-import { Emitter } from "../src";
+import { Emitter } from "../src/index.js";
 
 test("emit", t => {
 	t.plan(4);

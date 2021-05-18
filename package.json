@@ -1,30 +1,28 @@
 {
 	"name": "@mpt/events",
 	"description": "Event emitter library inspired by the event api used in vscode extensions",
-	"version": "1.0.1",
+	"homepage": "https://github.com/mxjp/events",
+	"repository": "https://github.com/mxjp/events.git",
+	"keywords": ["events", "emitter", "set", "vscode"],
+	"version": "2.0.0",
 	"author": "Max J. Polster",
-	"main": "./dist/es/index.js",
+	"type": "module",
 	"exports": {
-		".": {
-			"node": "./dist/cjs/index.js",
-			"require": "./dist/cjs/index.js",
-			"default": "./dist/es/index.js"
-		}
+		".": "./dist/index.js"
 	},
 	"scripts": {
 		"clean": "rimraf ./dist/**/* ./test_out/**/*",
-		"build:es": "tsc -p tsconfig-es.json",
-		"build:cjs": "tsc -p tsconfig-cjs.json",
 		"build": "npm run clean && concurrently npm:build:*",
-		"test": "npm run clean && tsc -p tsconfig-test.json && nyc -- ava -v",
+		"build:es": "tsc -p tsconfig-es.json",
+		"build:declaration": "tsc -p tsconfig-declaration.json",
+		"test": "npm run clean && tsc -p tsconfig-test.json && ava -v",
 		"start": "npm run clean && tsc -p tsconfig-test.json && concurrently \"tsc -p tsconfig-test.json -w\" \"ava -v -w\"",
 		"prepack": "npm test && npm run build"
 	},
 	"devDependencies": {
 		"ava": "^3.15.0",
-		"concurrently": "^6.0.0",
-		"nyc": "^15.1.0",
+		"concurrently": "^6.1.0",
 		"rimraf": "^3.0.2",
-		"typescript": "^4.2.3"
+		"typescript": "^4.2.4"
 	}
 }
