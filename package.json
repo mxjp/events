@@ -7,6 +7,7 @@
 	"version": "2.0.0",
 	"author": "Max J. Polster",
 	"type": "module",
+	"main": "./dist/index.js",
 	"exports": {
 		".": "./dist/index.js"
 	},
