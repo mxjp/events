@@ -3,8 +3,13 @@
 	"description": "Event emitter library inspired by the event api used in vscode extensions",
 	"homepage": "https://github.com/mxjp/events",
 	"repository": "https://github.com/mxjp/events.git",
-	"keywords": ["events", "emitter", "set", "vscode"],
-	"version": "2.0.0",
+	"keywords": [
+		"events",
+		"emitter",
+		"set",
+		"vscode"
+	],
+	"version": "2.0.1",
 	"author": "Max J. Polster",
 	"type": "module",
 	"main": "./dist/index.js",
