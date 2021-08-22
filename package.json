@@ -9,18 +9,18 @@
 		"set",
 		"vscode"
 	],
-	"version": "2.1.0",
+	"version": "2.1.1",
 	"author": "Max J. Polster",
 	"type": "module",
 	"main": "./dist/index.js",
 	"exports": {
 		".": "./dist/index.js",
-		"./cjs": "./dist/cjs/index.js"
+		"./cjs": "./dist/cjs/index.cjs"
 	},
 	"types": "./dist/index.d.ts",
 	"scripts": {
 		"clean": "rimraf ./dist/**/* ./test_out/**/*",
-		"build": "npm run clean && concurrently npm:build:*",
+		"build": "npm run clean && concurrently npm:build:* && node postbuild.mjs",
 		"build:es": "tsc -p tsconfig-es.json",
 		"build:cjs": "tsc -p tsconfig-cjs.json",
 		"build:declaration": "tsc -p tsconfig-declaration.json",
@@ -31,6 +31,7 @@
 	"devDependencies": {
 		"ava": "^3.15.0",
 		"concurrently": "^6.2.1",
+		"globby": "^11.0.4",
 		"rimraf": "^3.0.2",
 		"typescript": "^4.3.5"
 	}
