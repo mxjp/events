@@ -14,12 +14,15 @@
 	"type": "module",
 	"main": "./dist/index.js",
 	"exports": {
-		".": "./dist/index.js"
+		".": "./dist/index.js",
+		"./cjs": "./dist/cjs/index.js"
 	},
+	"types": "./dist/index.d.ts",
 	"scripts": {
 		"clean": "rimraf ./dist/**/* ./test_out/**/*",
 		"build": "npm run clean && concurrently npm:build:*",
 		"build:es": "tsc -p tsconfig-es.json",
+		"build:cjs": "tsc -p tsconfig-cjs.json",
 		"build:declaration": "tsc -p tsconfig-declaration.json",
 		"test": "npm run clean && tsc -p tsconfig-test.json && ava -v",
 		"start": "npm run clean && tsc -p tsconfig-test.json && concurrently \"tsc -p tsconfig-test.json -w\" \"ava -v -w\"",
