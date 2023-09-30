@@ -2,6 +2,7 @@
 /src
 /test*
 /.editorconfig
+/.eslint*
 /ava*
 /CHANGELOG.md
 /tsconfig*

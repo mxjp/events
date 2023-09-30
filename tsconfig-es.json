@@ -3,9 +3,9 @@
 	"compilerOptions": {
 		"rootDir": "src",
 		"outDir": "dist",
-		"removeComments": true
+		"declaration": true
 	},
 	"include": [
-		"src"
+		"./src"
 	]
 }

@@ -3,10 +3,12 @@
 export default {
 	files: [
 		"./test_out/test/**/*.js",
-		"!**/_*/*"
+		"!**/_*/**"
 	],
 	ignoredByWatcher: [
 		"./src/**/*",
-		"./test/**/*"
-	]
-};
+		"./test/**/*",
+	],
+	concurrency: 4,
+	verbose: true
+}

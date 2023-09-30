@@ -1,38 +1,30 @@
 {
 	"name": "@mpt/events",
-	"description": "Event emitter library inspired by the event api used in vscode extensions",
+	"description": "Minimal event emitter",
 	"homepage": "https://github.com/mxjp/events",
 	"repository": "https://github.com/mxjp/events.git",
 	"keywords": [
 		"events",
-		"emitter",
-		"set",
-		"vscode"
+		"emitter"
 	],
-	"version": "2.1.1",
+	"version": "3.0.0",
 	"author": "Max J. Polster",
 	"type": "module",
 	"main": "./dist/index.js",
-	"exports": {
-		".": "./dist/index.js",
-		"./cjs": "./dist/cjs/index.cjs"
-	},
-	"types": "./dist/index.d.ts",
+	"module": "./dist/index.js",
 	"scripts": {
-		"clean": "rimraf ./dist/**/* ./test_out/**/*",
-		"build": "npm run clean && concurrently npm:build:* && node postbuild.mjs",
-		"build:es": "tsc -p tsconfig-es.json",
-		"build:cjs": "tsc -p tsconfig-cjs.json",
-		"build:declaration": "tsc -p tsconfig-declaration.json",
-		"test": "npm run clean && tsc -p tsconfig-test.json && ava -v",
+		"clean": "rimraf ./dist ./test_out",
+		"test": "tsc -p tsconfig-test.json && ava -v",
 		"start": "npm run clean && tsc -p tsconfig-test.json && concurrently \"tsc -p tsconfig-test.json -w\" \"ava -v -w\"",
-		"prepack": "npm test && npm run build"
+		"build": "npm run clean && tsc -p tsconfig-es.json",
+		"lint": "eslint --config .eslintrc.cjs ./src/**/*",
+		"prepack": "npm test && npm run build && npm run lint"
 	},
 	"devDependencies": {
-		"ava": "^3.15.0",
-		"concurrently": "^6.2.1",
-		"globby": "^11.0.4",
-		"rimraf": "^3.0.2",
-		"typescript": "^4.3.5"
+		"@mpt/eslint-rules": "^4.0.2",
+		"ava": "^5.3.1",
+		"concurrently": "^8.2.1",
+		"rimraf": "^5.0.5",
+		"typescript": "^5.2.2"
 	}
 }

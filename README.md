@@ -1,5 +1,5 @@
 # @mpt/events
-Event emitter library inspired by the event api used in vscode extensions.
+A minimal event emitter that cleanly separates the emitting and the listening side.
 
 ## Installation
 ```bash
@@ -11,11 +11,11 @@ npm i @mpt/events
 import { Emitter } from "@mpt/events";
 
 class Example {
-  private readonly _onMessage = new Emitter<[message: string, sender: string]>();
-  public readonly onMessage = this._onMessage.event;
+  #onMessage = new Emitter<[message: string, sender: string]>();
+  onMessage = this.#onMessage.event;
 
-  public something() {
-    this._onMessage.emit("Hello World!", "something");
+  something() {
+    this.#onMessage.emit("Hello World!", "something");
   }
 }
 

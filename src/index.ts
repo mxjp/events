@@ -1,20 +1,34 @@
 
 /**
- * A function that is called when an event is emitted.
+ * A listener to an event.
  */
-export type EventListener<T extends any[]> = (...args: T) => void;
+export interface EventListener<T extends unknown[]> {
+	(...args: T): void;
+}
 
 /**
- * A function that can be called to remove a previously attached event listener.
+ * A subscription to an event.
  */
-export type EventSubscription = () => void;
+export interface EventSubscription {
+	/**
+	 * Remove one instance of the listener represented by this subscription.
+	 */
+	(): void;
+}
 
 /**
  * A function that can be called to attach an event listener.
- *
- * Listeners are called in the order they are attached.
  */
-export type Event<T extends any[]> = (listener: EventListener<T>) => EventSubscription;
+export interface Event<T extends unknown[]> {
+	/**
+	 * Attach an event listener.
+	 *
+	 * Listeners attached multiple times will also be called multiple times.
+	 *
+	 * @returns A function that can be called to remove one instance of the listener.
+	 */
+	(listener: EventListener<T>): EventSubscription;
+}
 
 /**
  * An emitter can be used to emit events.
@@ -39,46 +53,52 @@ export type Event<T extends any[]> = (listener: EventListener<T>) => EventSubscr
  * example.something();
  * ```
  */
-export class Emitter<T extends any[]> {
-	/**
-	 * Set of event listeners attached to this emitter.
-	 */
-	public readonly listeners = new Set<EventListener<T>>();
+export class Emitter<T extends unknown[]> {
+	#listeners: EventListener<T>[] = [];
 
 	/**
-	 * Emit this event.
-	 * @returns `true` if any listeners have been called.
+	 * Call all listeners of this emitter.
+	 *
+	 * @param args The arguments to pass to the listeners.
+	 * @returns True if any listeners have been called.
 	 */
-	public emit(...args: T): boolean;
-	public emit() {
-		if (this.listeners.size > 0) {
-			this.listeners.forEach(listener => listener.apply(null, arguments as unknown as T));
-			return true;
+	emit(...args: T): boolean;
+	emit(): boolean {
+		const listeners = this.#listeners;
+		for (let i = 0; i < listeners.length; i++) {
+			listeners[i].apply(null, arguments as unknown as T);
 		}
-		return false;
+		return listeners.length > 0;
 	}
 
 	/**
-	 * Emit this event.
-	 * @param getArgs A function that is called to get the event arguments only if at least one listener will be called.
-	 * @returns `true` if any listeners have been called.
+	 * Call all listeners of this emitter.
+	 *
+	 * @param getArgs A function to compute the arguments only if there are any listeners.
+	 * @returns True if any listeners have been called.
 	 */
-	public emitLazy(getArgs: () => T) {
-		if (this.listeners.size > 0) {
+	emitLazy(getArgs: () => T): boolean {
+		const listeners = this.#listeners;
+		if (listeners.length > 0) {
 			const args = getArgs();
-			this.listeners.forEach(listener => listener.apply(null, args));
+			for (let i = 0; i < listeners.length; i++) {
+				listeners[i].apply(null, args);
+			}
 			return true;
 		}
 		return false;
 	}
 
 	/**
-	 * The event that is controller by this emitter.
+	 * The event that is controlled by this emitter.
 	 */
-	public readonly event: Event<T> = listener => {
-		this.listeners.add(listener);
+	event: Event<T> = listener => {
+		this.#listeners.push(listener);
 		return () => {
-			this.listeners.delete(listener);
+			const index = this.#listeners.indexOf(listener);
+			if (index !== -1) {
+				this.#listeners.splice(index, 1);
+			}
 		};
 	};
 }
